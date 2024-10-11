@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -186,9 +186,7 @@ const Login = () => {
             </div>
 
             <p className="mt-4 text-center text-sm text-gray-600">
-              <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                Mot de passe oublié ?
-              </a>
+              <Link className="font-medium text-blue-600 hover:text-blue-500">Mot de passe oublié ?</Link>
             </p>
           </div>
         </div>

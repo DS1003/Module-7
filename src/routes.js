@@ -8,8 +8,9 @@ import Login from './components/Login';
 const Dashboard = lazy(() => import('./components/Dashboard'));
 
 const AppRoutes = () => {
+  
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div className='spinner'>Loading...</div>}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

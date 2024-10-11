@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import About from './components/About';
 import Login from './components/Login';
-import ProtectedRoute from './components/ProtectedRoute';
+import withAuth from './hoc/withAuth';  // Importation du HOC
 
 // Lazy load the Dashboard component
 const Dashboard = lazy(() => import('./components/Dashboard'));
@@ -15,14 +15,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/dashboard" element={withAuth(<Dashboard />)} />
       </Routes>
     </Suspense>
   );

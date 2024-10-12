@@ -7,6 +7,7 @@ import Register from './components/Register';
 import MainFeed from './components/MAinFeed';
 
 
+
 // Lazy load the Dashboard component
 const Dashboard = lazy(() => import('./components/Dashboard'));
 
@@ -21,6 +22,7 @@ const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Dashboard />} />
       </Routes>
     </Suspense>
   );

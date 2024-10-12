@@ -12,7 +12,7 @@ const UserMeasurements = ({ measurements }) => {
   ];
 
   return (
-    <div className="bg-gradient-to-br from-white to-[#FFF5F4] rounded-xl border-2 border-[#4A4A4A] shadow-lg p-8 mb-6 max-w-md mx-auto">
+    <div className="bg-gradient-to-br from-white to-[#FFF5F4] rounded-xl border-2  shadow-lg p-8 mb-6 max-w-md mx-auto">
       <h2 className="text-3xl font-bold mb-6 text-[#4A4A4A] border-b-2 border-[#CC8C87] pb-2 flex items-center justify-center">
         <Ruler className="w-8 h-8 mr-3 text-[#CC8C87]" />
         Measurements

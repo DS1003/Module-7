@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { Edit3, Video, Image, Smile, MoreHorizontal, X } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Edit3, Image, X } from 'lucide-react';
 
 export default function CreatePostCard() {
   const [postContent, setPostContent] = useState('');
   const [tags, setTags] = useState([]);
   const [currentTag, setCurrentTag] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const fileInputRef = useRef(null);
 
   const handleAddTag = (e) => {
     e.preventDefault();
@@ -18,13 +20,24 @@ export default function CreatePostCard() {
     setTags(tags.filter(tag => tag !== tagToRemove));
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file && (file.type.startsWith('image/') || file.type.startsWith('video/'))) {
+      setSelectedFile(file);
+    } else {
+      alert('Please select an image or video file.');
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Post Content:', postContent);
     console.log('Tags:', tags);
+    console.log('Selected File:', selectedFile);
     // Here you would typically send the post data to your backend
     setPostContent('');
     setTags([]);
+    setSelectedFile(null);
   };
 
   return (
@@ -82,22 +95,27 @@ export default function CreatePostCard() {
         </div>
         <div className="flex justify-between items-center">
           <div className="flex space-x-4">
-            <button type="button" className="flex items-center text-gray-600 hover:text-gray-800">
-              <Video className="w-5 h-5 text-red-500 mr-1" />
-              <span className="text-sm">Live Video</span>
-            </button>
-            <button type="button" className="flex items-center text-gray-600 hover:text-gray-800">
+            <button 
+              type="button" 
+              onClick={() => fileInputRef.current.click()} 
+              className="flex items-center text-gray-600 hover:text-gray-800"
+            >
               <Image className="w-5 h-5 text-green-500 mr-1" />
               <span className="text-sm">Photo/Video</span>
             </button>
-            <button type="button" className="flex items-center text-gray-600 hover:text-gray-800">
-              <Smile className="w-5 h-5 text-orange-500 mr-1" />
-              <span className="text-sm">Feeling/Activity</span>
-            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*,video/*"
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
           </div>
-          <button type="button" className="text-gray-600 hover:text-gray-800">
-            <MoreHorizontal className="w-5 h-5" />
-          </button>
+          {selectedFile && (
+            <div className="text-sm text-gray-600">
+              File selected: {selectedFile.name}
+            </div>
+          )}
         </div>
         <button
           type="submit"

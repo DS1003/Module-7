@@ -1,26 +1,31 @@
-import React, { useState } from 'react'
-import { Heart, MessageCircle, Share2, Bookmark, Star } from 'lucide-react'
+import React, { useState } from 'react';
+import { Heart, MessageCircle, Share2, Bookmark, Star } from 'lucide-react';
+import RatingModal from './RatingModal';
+import CommentModal from './CommentModal';
 
-export default function Post() {
-  const [liked, setLiked] = useState(false)
-  const [bookmarked, setBookmarked] = useState(false)
-  const [rated, setRated] = useState(false)
-  const [likeCount, setLikeCount] = useState(30)
-  const [commentCount, setCommentCount] = useState(12)
-  const [shareCount, setShareCount] = useState(5)
+export default function PostCard() {
+  const [liked, setLiked] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
+  const [likeCount, setLikeCount] = useState(30);
+  const [commentCount, setCommentCount] = useState(12);
+  const [shareCount, setShareCount] = useState(5);
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [showCommentModal, setShowCommentModal] = useState(false);
+  const [rating, setRating] = useState(0);
 
   const handleLike = () => {
-    setLiked(!liked)
-    setLikeCount(liked ? likeCount - 1 : likeCount + 1)
-  }
+    setLiked(!liked);
+    setLikeCount(liked ? likeCount - 1 : likeCount + 1);
+  };
 
   const handleBookmark = () => {
-    setBookmarked(!bookmarked)
-  }
+    setBookmarked(!bookmarked);
+  };
 
-  const handleRate = () => {
-    setRated(!rated)
-  }
+  const handleRating = (newRating) => {
+    setRating(newRating);
+    setShowRatingModal(false);
+  };
 
   return (
     <div className="max-w-2xl mt-3 bg-white rounded-lg shadow-md overflow-hidden">
@@ -43,7 +48,8 @@ export default function Post() {
             </svg>
           </button>
         </div>
-        <div className="mb-4">
+        <div className="mb-4 space-y-2">
+          <p className="text-gray-700">Here's a description of the post. It can be multiple lines long and provide context for the image below.</p>
           <img
             src="https://avatars.githubusercontent.com/u/100100154?v=4"
             alt="Post image"
@@ -67,7 +73,10 @@ export default function Post() {
               />
               <span>{likeCount}</span>
             </button>
-            <button className="flex items-center space-x-1 text-gray-500">
+            <button 
+              onClick={() => setShowCommentModal(true)}
+              className="flex items-center space-x-1 text-gray-500"
+            >
               <MessageCircle className="w-5 h-5" />
               <span>{commentCount}</span>
             </button>
@@ -92,22 +101,28 @@ export default function Post() {
               />
             </button>
             <button
-              onClick={handleRate}
+              onClick={() => setShowRatingModal(true)}
               className={`${
-                rated ? 'text-yellow-500' : 'text-gray-500'
+                rating > 0 ? 'text-yellow-500' : 'text-gray-500'
               } transition-colors duration-200`}
             >
               <Star
                 className={`w-5 h-5 ${
-                  rated ? 'fill-current' : ''
+                  rating > 0 ? 'fill-current' : ''
                 } transform transition-transform duration-200 ${
-                  rated ? 'scale-125' : ''
+                  rating > 0 ? 'scale-125' : ''
                 }`}
               />
             </button>
           </div>
         </div>
       </div>
+      {showRatingModal && (
+        <RatingModal onClose={() => setShowRatingModal(false)} onRate={handleRating} />
+      )}
+      {showCommentModal && (
+        <CommentModal postImage="https://avatars.githubusercontent.com/u/100100154?v=4" onClose={() => setShowCommentModal(false)} />
+      )}
     </div>
-  )
+  );
 }

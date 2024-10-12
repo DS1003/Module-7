@@ -3,7 +3,7 @@ import { Ruler } from 'lucide-react';
 
 const UserMeasurements = ({ measurements }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+    <div className="bg-white border-2 border-[#CC8C87]  rounded-lg shadow-md p-6 mb-6">
       <h2 className="text-2xl font-semibold mb-4 flex items-center">
         <Ruler className="w-6 h-6 mr-2 text-gray-500" />
         Measurements

@@ -26,8 +26,8 @@ const ProfileHeader = ({ user }) => {
           </button>
         </div>
         <div className="ml-4 mb-4">
-          <h1 className="text-3xl font-bold text-white shadow-text">{user.name}</h1>
-          <p className="text-white shadow-text">{user.tagline}</p>
+          <h1 className="text-3xl font-bold text-[#CC8C87] shadow-text">{user.name}</h1>
+          <p className="text-gray-400 shadow-text">{user.tagline}</p>
         </div>
       </div>
       <div className="absolute top-4 right-4">

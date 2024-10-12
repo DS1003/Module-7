@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { 
   Home,
-  Info,
-  LogIn,
+  Search,
+  Bell,
+  MessageSquare,
+  Settings,
   LogOut,
   Menu,
   X,
-  User,
+  Grid,
+  PlusSquare,
+  Briefcase,
   ChevronDown
 } from 'lucide-react';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const isAuthenticated = localStorage.getItem('isAuthenticated');
+  
+  const user = {
+    name: "John Doe",
+    avatar: "https://avatars.githubusercontent.com/u/100100154?v=4"
+  };
 
-  // Gestion du scroll pour l'effet de fond
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -34,78 +41,119 @@ const Navbar = () => {
     navigate('/login');
   };
 
-  const NavItem = ({ to, icon: Icon, children }) => (
+  const NavItem = ({ to, icon: Icon, children, notificationCount }) => (
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center px-4 py-2 rounded-lg transition-colors duration-200 ${
+        `flex items-center justify-center w-14 h-14 rounded-xl transition-colors duration-200 relative ${
           isActive
-            ? 'bg-blue-600 text-white'
-            : 'text-gray-700 hover:bg-blue-50'
+            ? 'text-[#CC8C87] bg-[#FDF1F2]'
+            : 'text-[#242424] hover:bg-[#FDF1F2]'
         }`
       }
       onClick={() => setIsMenuOpen(false)}
     >
-      <Icon className="w-5 h-5 mr-2" />
-      <span>{children}</span>
+      <Icon className="w-6 h-6" />
+      {notificationCount > 0 && (
+        <span className="absolute top-1 right-1 bg-[#CC8C87] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+          {notificationCount}
+        </span>
+      )}
     </NavLink>
   );
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      scrolled ? 'bg-white shadow-md' : 'bg-white/80 backdrop-blur-md'
+      scrolled ? 'bg-white shadow-md' : 'bg-white'
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <NavLink to="/" className="flex items-center">
-              <span className="text-2xl font-bold text-blue-600">Roxana</span>
+          {/* Logo and Search */}
+          <div className="flex items-center flex-1">
+            <NavLink to="/" className="flex-shrink-0 mr-10">
+              <span className="titreSite text-4xl font-bold text-[#CC8C87]">Threadline</span>
             </NavLink>
+            <div className="relative hidden sm:block max-w-xs w-full">
+              <input
+                type="text"
+                placeholder="Rechercher sur Theardline"
+                className="w-full px-4 py-2 rounded-full bg-[#f4f4f4] text-[#242424] border-none placeholder-[#77696A] focus:outline-none focus:ring-2 focus:ring-[#EAB0B7]"
+              />
+              <Search className="absolute right-3 top-2.5 w-5 h-5 text-[#77696A]" />
+            </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-1">
-            <NavItem to="/" icon={Home}>Accueil</NavItem>
-            <NavItem to="/about" icon={Info}>À propos</NavItem>
-            
+          {/* Main Navigation */}
+          <div className="flex items-center justify-center flex-1 space-x-2">
+            <NavItem to="/" icon={Home} />
+            <NavItem to="/network" icon={Briefcase} />
+            <NavItem to="/create" icon={PlusSquare} />
+            <NavItem to="/messages" icon={MessageSquare} notificationCount={3} />
+            <NavItem to="/notifications" icon={Bell} notificationCount={5} />
+          </div>
+
+          {/* Profile and More */}
+          <div className="flex items-center justify-end flex-1">
             {isAuthenticated ? (
-              <div className="relative">
+              <>
                 <button
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                  className="flex items-center px-4 py-2 rounded-lg text-gray-700 hover:bg-blue-50 transition-colors duration-200"
+                  className="flex items-center justify-center h-10 rounded-full hover:bg-[#FDF1F2] transition-colors duration-200 mr-2 px-2"
                 >
-                  <User className="w-5 h-5 mr-2" />
-                  <span>Mon Profil</span>
-                  <ChevronDown className="w-4 h-4 ml-2" />
+                  <img 
+                    src={user.avatar}
+                    alt={user.name} 
+                    className="w-8 h-8 rounded-full object-cover mr-2"
+                  />
+                  <ChevronDown className="w-4 h-4 text-[#242424]" />
+                </button>
+                <button className="flex items-center justify-center w-10 h-10 rounded-full bg-[#FDF1F2] hover:bg-[#EAB0B7] transition-colors duration-200">
+                  <Grid className="w-5 h-5 text-[#242424]" />
                 </button>
 
-                {/* Dropdown Menu */}
+                {/* Profile Dropdown */}
                 {isProfileMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 border border-gray-100">
+                  <div className="absolute right-4 top-16 w-96 bg-white rounded-lg shadow-lg py-2 border border-[#EAB0B7]">
+                    <div className="px-4 py-3 border-b border-[#EAB0B7]">
+                      <div className="flex items-center">
+                        <img 
+                          src={user.avatar}
+                          alt={user.name} 
+                          className="w-14 h-14 rounded-full object-cover mr-3"
+                        />
+                        <div>
+                          <p className="font-semibold text-[#242424]">{user.name}</p>
+                          <p className="text-sm text-[#77696A]">Voir votre profil</p>
+                        </div>
+                      </div>
+                    </div>
                     <NavLink
-                      to="/dashboard"
-                      className="block px-4 py-2 text-gray-700 hover:bg-blue-50"
+                      to="/settings"
+                      className="flex items-center px-4 py-3 text-[#242424] hover:bg-[#FDF1F2]"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
-                      Tableau de bord
+                      <div className="bg-[#EAB0B7] p-2 rounded-full mr-3">
+                        <Settings className="w-5 h-5 text-white" />
+                      </div>
+                      <span>Paramètres et confidentialité</span>
                     </NavLink>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 flex items-center"
+                      className="w-full flex items-center px-4 py-3 text-[#242424] hover:bg-[#FDF1F2]"
                     >
-                      <LogOut className="w-4 h-4 mr-2" />
-                      Déconnexion
+                      <div className="bg-[#EAB0B7] p-2 rounded-full mr-3">
+                        <LogOut className="w-5 h-5 text-white" />
+                      </div>
+                      <span>Déconnexion</span>
                     </button>
                   </div>
                 )}
-              </div>
+              </>
             ) : (
               <NavLink
                 to="/login"
-                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                className="flex items-center px-4 py-2 bg-[#CC8C87] text-white rounded-md hover:bg-[#EAB0B7] transition-colors duration-200"
               >
-                <LogIn className="w-5 h-5 mr-2" />
                 Connexion
               </NavLink>
             )}
@@ -114,7 +162,7 @@ const Navbar = () => {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-blue-50 transition-colors duration-200"
+            className="md:hidden ml-2 p-2 rounded-full text-[#242424] hover:bg-[#FDF1F2] transition-colors duration-200"
           >
             {isMenuOpen ? (
               <X className="w-6 h-6" />
@@ -126,36 +174,70 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-100 py-4">
+          <div className="md:hidden bg-white border-t border-[#EAB0B7] py-4">
             <div className="space-y-2 px-2">
-              <NavItem to="/" icon={Home}>Accueil</NavItem>
-              <NavItem to="/about" icon={Info}>À propos</NavItem>
+              {isAuthenticated && (
+                <div className="flex items-center px-3 py-2 border-b border-[#EAB0B7] mb-2">
+                  <img 
+                    src={user.avatar}
+                    alt={user.name} 
+                    className="w-10 h-10 rounded-full mr-3 object-cover"
+                  />
+                  <span className="font-semibold text-[#242424]">{user.name}</span>
+                </div>
+              )}
+              <div className="px-3 py-2">
+                <input
+                  type="text"
+                  placeholder="Rechercher sur Theardline"
+                  className="w-full px-4 py-2 rounded-full bg-[#FDF1F2] text-[#242424] placeholder-[#77696A] focus:outline-none focus:ring-2 focus:ring-[#EAB0B7]"
+                />
+              </div>
+              <NavLink to="/" className="flex items-center px-3 py-2 text-[#242424] hover:bg-[#FDF1F2] rounded-md">
+                <Home className="w-5 h-5 mr-3" />
+                Accueil
+              </NavLink>
+              <NavLink to="/network" className="flex items-center px-3 py-2 text-[#242424] hover:bg-[#FDF1F2] rounded-md">
+                <Briefcase className="w-5 h-5 mr-3" />
+                Mon réseau
+              </NavLink>
+              <NavLink to="/create" className="flex items-center px-3 py-2 text-[#242424] hover:bg-[#FDF1F2] rounded-md">
+                <PlusSquare className="w-5 h-5 mr-3" />
+                Créer
+              </NavLink>
+              <NavLink to="/messages" className="flex items-center px-3 py-2 text-[#242424] hover:bg-[#FDF1F2] rounded-md">
+                <MessageSquare className="w-5 h-5 mr-3" />
+                Messages
+              </NavLink>
+              <NavLink to="/notifications" className="flex items-center px-3 py-2 text-[#242424] hover:bg-[#FDF1F2] rounded-md">
+                <Bell className="w-5 h-5 mr-3" />
+                Notifications
+              </NavLink>
               
               {isAuthenticated ? (
                 <>
                   <NavLink
-                    to="/dashboard"
-                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg"
+                    to="/settings"
+                    className="flex items-center px-3 py-2 text-[#242424] hover:bg-[#FDF1F2] rounded-md"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <User className="w-5 h-5 mr-2" />
-                    Tableau de bord
+                    <Settings className="w-5 h-5 mr-3" />
+                    Paramètres
                   </NavLink>
                   <button
                     onClick={handleLogout}
-                    className="w-full flex items-center px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg"
+                    className="w-full flex items-center px-3 py-2 text-[#242424] hover:bg-[#FDF1F2] rounded-md"
                   >
-                    <LogOut className="w-5 h-5 mr-2" />
+                    <LogOut className="w-5 h-5 mr-3" />
                     Déconnexion
                   </button>
                 </>
               ) : (
                 <NavLink
                   to="/login"
-                  className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  className="flex items-center px-4 py-2 bg-[#CC8C87] text-white rounded-md hover:bg-[#EAB0B7]"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <LogIn className="w-5 h-5 mr-2" />
                   Connexion
                 </NavLink>
               )}

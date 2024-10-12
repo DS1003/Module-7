@@ -1,197 +1,210 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Facebook, Mail, Lock, User, Linkedin, Github, Phone, Home, Calendar, Globe, Building, Mail as Envelope, Camera } from 'lucide-react';
+
+const styles = `
+  .form-container {
+    transition: all 0.6s ease-in-out;
+  }
+  .overlay-container {
+    transition: transform 0.6s ease-in-out;
+  }
+  .overlay {
+    transition: transform 0.6s ease-in-out;
+  }
+  .overlay-left, .overlay-right {
+    transition: transform 0.6s ease-in-out;
+  }
+  .right-panel-active .form-container.sign-up {
+    transform: translateX(100%);
+    display: block;
+    z-index: 5;
+    animation: show 0.6s;
+  }
+  .right-panel-active .form-container.sign-in {
+    transform: translateX(100%);
+    display: none;
+  }
+  .right-panel-active .overlay-container {
+    transform: translateX(-100%);
+  }
+  .right-panel-active .overlay {
+    transform: translateX(50%);
+  }
+  .right-panel-active .overlay-left {
+    transform: translateX(0);
+  }
+  .right-panel-active .overlay-right {
+    transform: translateX(20%);
+  }
+  @keyframes show {
+    0%, 49.99% {
+      opacity: 0;
+      z-index: 1;
+    }
+    50%, 100% {
+      opacity: 1;
+      z-index: 5;
+    }
+  }
+`;
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [isRightPanelActive, setIsRightPanelActive] = useState(false);
+  const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const [registerData, setRegisterData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    address: '',
+    phone: '',
+    birthDate: '',
+    gender: '',
+    country: '',
+    city: '',
+    postalCode: '',
+    profilePicture: null,
+  });
+  const [error, setError] = useState('');
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError('');
-
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-
-    if (username === 'seydiop@07' && password === 'admin') {
+    if (loginData.email === 'seydiop@07' && loginData.password === 'admin') {
       localStorage.setItem('isAuthenticated', 'true');
       navigate('/dashboard');
     } else {
-      setError('Identifiants incorrects. Veuillez réessayer.');
+      setError('Identifiants incorrects');
     }
-    setIsLoading(false);
   };
 
+  const handleRegister = (e) => {
+    e.preventDefault();
+    // Implement registration logic here
+    console.log('Registration data:', registerData);
+  };
+
+  const handleInputChange = (e, formType) => {
+    const { name, value, files } = e.target;
+    if (formType === 'login') {
+      setLoginData({ ...loginData, [name]: value });
+    } else {
+      setRegisterData({
+        ...registerData,
+        [name]: name === 'profilePicture' ? files[0] : value,
+      });
+    }
+  };
+
+  const InputField = ({ icon: Icon, ...props }) => (
+    <div className="relative">
+      <Icon className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+      <input
+        {...props}
+        className="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      />
+    </div>
+  );
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md px-6 py-8">
-        <div className="bg-white rounded-xl shadow-2xl p-8 border border-gray-100">
-          {/* Logo/Avatar section */}
-          <div className="mb-8 text-center">
-            <div className="w-20 h-20 bg-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center">
-              <svg 
-                className="w-10 h-10 text-white"
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth="2" 
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                />
-              </svg>
+    <>
+      <style>{styles}</style>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className={`relative w-[1000px] h-[600px] bg-white rounded-3xl shadow-xl overflow-hidden ${isRightPanelActive ? 'right-panel-active' : ''}`}>
+          {/* Sign In Form */}
+          <div className="form-container sign-in absolute top-0 left-0 h-full w-1/2 z-2 p-12 flex flex-col justify-center">
+            <h2 className="text-4xl font-bold mb-6 text-blue-600">Connexion</h2>
+            <div className="flex justify-center space-x-4 mb-4">
+              {[Facebook, Github, Linkedin].map((Icon, index) => (
+                <button key={index} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
+                  <Icon className="w-5 h-5" />
+                </button>
+              ))}
             </div>
-            <h2 className="text-3xl font-bold text-gray-900">Bienvenue</h2>
-            <p className="text-gray-500 mt-2">Connectez-vous à votre compte</p>
+            <p className="text-center text-gray-500 mb-6">ou utilisez votre email :</p>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <InputField icon={Mail} type="email" name="email" placeholder="Email" value={loginData.email} onChange={(e) => handleInputChange(e, 'login')} />
+              <InputField icon={Lock} type="password" name="password" placeholder="Mot de passe" value={loginData.password} onChange={(e) => handleInputChange(e, 'login')} />
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+              <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                SE CONNECTER
+              </button>
+            </form>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div>
-              <label 
-                htmlFor="username" 
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Nom d'utilisateur
-              </label>
-              <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                  <svg 
-                    className="w-5 h-5"
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth="2" 
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
-                </span>
-                <input
-                  type="text"
-                  id="username"
-                  className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition duration-150 ease-in-out"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="seydiop@07"
-                />
-              </div>
+          {/* Sign Up Form */}
+          <div className="form-container sign-up absolute top-0 left-0 h-full w-1/2 hidden z-1 p-12 flex flex-col justify-center">
+            <h2 className="text-4xl font-bold mb-6 text-blue-600">Créer un compte</h2>
+            <div className="flex justify-center space-x-4 mb-4">
+              {[Facebook, Github, Linkedin].map((Icon, index) => (
+                <button key={index} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
+                  <Icon className="w-5 h-5" />
+                </button>
+              ))}
             </div>
-
-            <div>
-              <label 
-                htmlFor="password" 
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Mot de passe
-              </label>
-              <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                  <svg 
-                    className="w-5 h-5"
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth="2" 
-                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+            <p className="text-center text-gray-500 mb-6">ou inscrivez-vous avec votre email :</p>
+            <form onSubmit={handleRegister} className="space-y-4 overflow-y-auto max-h-[400px] pr-4">
+              <InputField icon={User} type="text" name="lastName" placeholder="Nom" value={registerData.lastName} onChange={(e) => handleInputChange(e, 'register')} />
+              <InputField icon={User} type="text" name="firstName" placeholder="Prénom" value={registerData.firstName} onChange={(e) => handleInputChange(e, 'register')} />
+              <InputField icon={Mail} type="email" name="email" placeholder="Email" value={registerData.email} onChange={(e) => handleInputChange(e, 'register')} />
+              <InputField icon={Lock} type="password" name="password" placeholder="Mot de passe" value={registerData.password} onChange={(e) => handleInputChange(e, 'register')} />
+              <InputField icon={Phone} type="tel" name="phone" placeholder="Téléphone" value={registerData.phone} onChange={(e) => handleInputChange(e, 'register')} />
+              <InputField icon={Home} type="text" name="address" placeholder="Adresse" value={registerData.address} onChange={(e) => handleInputChange(e, 'register')} />
+              <InputField icon={Calendar} type="date" name="birthDate" placeholder="Date de naissance" value={registerData.birthDate} onChange={(e) => handleInputChange(e, 'register')} />
+              <div className="relative flex space-x-4 items-center">
+                <label className="text-gray-400">Sexe :</label>
+                {['male', 'female'].map((gender) => (
+                  <div key={gender} className="flex items-center">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value={gender}
+                      checked={registerData.gender === gender}
+                      onChange={(e) => handleInputChange(e, 'register')}
                     />
-                  </svg>
-                </span>
-                <input
-                  type="password"
-                  id="password"
-                  className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition duration-150 ease-in-out"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                />
+                    <label className="ml-2">{gender === 'male' ? 'Homme' : 'Femme'}</label>
+                  </div>
+                ))}
               </div>
-            </div>
-
-            {error && (
-              <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm flex items-center">
-                <svg 
-                  className="w-5 h-5 mr-2"
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth="2" 
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
-                {error}
-              </div>
-            )}
-
-            <div className="pt-2">
-              <button
-                type="submit"
-                disabled={isLoading}
-                className={`w-full flex items-center justify-center px-4 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150 ${
-                  isLoading ? 'opacity-75 cursor-not-allowed' : ''
-                }`}
-              >
-                {isLoading ? (
-                  <svg 
-                    className="animate-spin h-5 w-5 text-white" 
-                    fill="none" 
-                    viewBox="0 0 24 24"
-                  >
-                    <circle 
-                      className="opacity-25" 
-                      cx="12" 
-                      cy="12" 
-                      r="10" 
-                      stroke="currentColor" 
-                      strokeWidth="4"
-                    />
-                    <path 
-                      className="opacity-75" 
-                      fill="currentColor" 
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    />
-                  </svg>
-                ) : (
-                  'Se connecter'
-                )}
+              <InputField icon={Globe} type="text" name="country" placeholder="Pays" value={registerData.country} onChange={(e) => handleInputChange(e, 'register')} />
+              <InputField icon={Building} type="text" name="city" placeholder="Ville" value={registerData.city} onChange={(e) => handleInputChange(e, 'register')} />
+              <InputField icon={Envelope} type="text" name="postalCode" placeholder="Code postal" value={registerData.postalCode} onChange={(e) => handleInputChange(e, 'register')} />
+              <InputField icon={Camera} type="file" name="profilePicture" accept="image/*" onChange={(e) => handleInputChange(e, 'register')} />
+              <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                S'INSCRIRE
               </button>
-            </div>
-          </form>
+            </form>
+          </div>
 
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+          {/* Overlay Container */}
+          <div className="overlay-container absolute top-0 left-1/2 w-1/2 h-full overflow-hidden z-100">
+            <div className="overlay bg-blue-600 text-white relative -left-full h-full w-[200%]">
+              <div className="overlay-left absolute top-0 left-0 flex flex-col justify-center items-center w-1/2 h-full -translate-x-[20%] p-12">
+                <h2 className="text-4xl font-bold mb-6">Bon retour !</h2>
+                <p className="mb-8 text-center">Connectez-vous pour accéder à votre espace personnel</p>
+                <button
+                  onClick={() => setIsRightPanelActive(false)}
+                  className="border-2 border-white px-10 py-2 rounded-lg font-semibold uppercase tracking-wide hover:bg-white hover:text-blue-600 transition-colors"
+                >
+                  Se connecter
+                </button>
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
-                  Besoin d'aide ?
-                </span>
+              <div className="overlay-right absolute top-0 right-0 flex flex-col justify-center items-center w-1/2 h-full translate-x-0 p-12">
+                <h2 className="text-4xl font-bold mb-6">Bienvenue !</h2>
+                <p className="mb-8 text-center">Créez votre compte et commencez votre voyage avec nous</p>
+                <button
+                  onClick={() => setIsRightPanelActive(true)}
+                  className="border-2 border-white px-10 py-2 rounded-lg font-semibold uppercase tracking-wide hover:bg-white hover:text-blue-600 transition-colors"
+                >
+                  S'inscrire
+                </button>
               </div>
             </div>
-
-            <p className="mt-4 text-center text-sm text-gray-600">
-              <Link className="font-medium text-blue-600 hover:text-blue-500">Mot de passe oublié ?</Link>
-            </p>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

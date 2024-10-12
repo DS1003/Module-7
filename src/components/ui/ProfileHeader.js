@@ -4,9 +4,9 @@ import { Camera, Edit } from 'lucide-react';
 const ProfileHeader = ({ user }) => {
   return (
     <div className="relative">
-      <div className="h-80 overflow-hidden">
+      <div className="h-96  overflow-hidden">
         <img
-          src={user.coverPhoto}
+          src="https://res.cloudinary.com/drxouwbms/image/upload/v1728761058/cgkho4rmytr3vizj7efa.png"
           alt="Cover"
           className="w-full object-cover"
         />
@@ -17,7 +17,7 @@ const ProfileHeader = ({ user }) => {
       <div className="absolute bottom-0 left-8 transform translate-y-1/2 flex items-end">
         <div className="relative">
           <img
-            src={user.profilePicture}
+            src={user.profilePicture || "https://avatars.githubusercontent.com/u/100100154?v=4"}
             alt={user.name}
             className="w-40 h-40 rounded-full border-4 border-white"
           />

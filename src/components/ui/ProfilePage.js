@@ -2,7 +2,7 @@ import React from 'react';
 import ProfileHeader from './ProfileHeader';
 import UserInfo from './UserInfo';
 import UserPosts from './UserPosts';
-import UserPhotos from './UserPhotos';
+import InstagramStyleFavorites from './InstagramStyleFavorites';
 import UserMeasurements from './UserMeasurements';
 
 const ProfilePage = () => {
@@ -69,10 +69,12 @@ const ProfilePage = () => {
           <div className="md:col-span-1">
             <UserInfo user={user} />
             <UserMeasurements measurements={measurements} />
+            <InstagramStyleFavorites posts={posts} />
+
           </div>
-          {/* <div className="md:col-span-2">
+          <div className="md:col-span-2">
             <UserPosts posts={posts} />
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

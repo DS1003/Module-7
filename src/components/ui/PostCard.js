@@ -52,7 +52,7 @@ export default function PostCard() {
           <p className="text-gray-700">Here's a description of the post. It can be multiple lines long and provide context for the image below.</p>
           <img
             src="https://avatars.githubusercontent.com/u/100100154?v=4"
-            alt="Post image"
+            alt="user-image"
             className="w-full h-90 object-cover rounded-lg"
           />
         </div>

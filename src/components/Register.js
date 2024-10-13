@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { User, Mail, Lock, Phone, MapPin, Camera, Scissors } from 'lucide-react';
 import apiService from '../services/ApiService';
+import Loading from './animations/Loading';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -41,15 +42,15 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-    // setIsLoading(true);
-    // try{
-    //   const response = await apiService.request('post', '/users/register', formData);
-    //   console.log(response);
-    // }catch(err){
-    //   console.log(err);
-    // }finally{
-    //   setIsLoading(false);
-    // }
+    setIsLoading(true);
+    try{
+      const response = await apiService.request('post', '/users/register', formData);
+      console.log(response);
+    }catch(err){
+      console.log(err);
+    }finally{
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -234,9 +235,14 @@ const Register = () => {
             <div className="md:col-span-2">
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#CC8C87] hover:bg-[#EAB0B7] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CC8C87] transition-all duration-300 ease-in-out"
+                className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#CC8C87] ${isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#EAB0B7] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CC8C87] transition-all duration-300 ease-in-out'} `}
+                disabled={isLoading}
               >
-                S'inscrire
+                {
+                  isLoading ? (
+                    <Loading/>
+                  ) : ("S'inscrire")
+                }
               </button>
             </div>
           </form>

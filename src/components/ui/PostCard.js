@@ -27,7 +27,7 @@ export default function PostCard({ post }) {
     setShowRatingModal(false);
   };
 
-  return (
+return (
     <div className="max-w-2xl mt-3 bg-white rounded-lg shadow-md overflow-hidden">
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
@@ -66,7 +66,7 @@ export default function PostCard({ post }) {
         <div className="flex items-center justify-between mt-4">
           <div className="flex space-x-4">
             <button onClick={handleLike} className="flex items-center">
-              <Heart className={`w-5 h-5 ${liked ? 'text-red-500' : 'text-gray-500'}`} />
+              <Heart className={w-5 h-5 ${liked ? 'text-red-500' : 'text-gray-500'}} />
               <span className="ml-1">{likeCount}</span>
             </button>
             <button onClick={() => setShowCommentModal(true)} className="flex items-center">

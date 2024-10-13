@@ -3,7 +3,7 @@ import { VerifiedIcon } from 'lucide-react'
 
 export default function Component() {
   return (
-    <div className="w-full h-fit max-w-lg mb-3  bg-white rounded-lg shadow-sm p-4 relative">
+    <div className="w-full  h-fit max-w-lg mb-3  bg-white rounded-lg shadow-sm p-4 relative">
       <div className="flex items-center gap-3 mb-4">
         <img
           src="https://avatars.githubusercontent.com/u/100100154?v=4"

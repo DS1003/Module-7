@@ -1,38 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProfileInfo from './ProfileInfo';
-import StoryCircles from './Stories'; // Assurez-vous que le chemin est correct
-import CreatePostCard from './CreatePost'; // Assurez-vous que le chemin est correct
-import Post from './ui/PostCard';
-import Sidebar  from './Sidebar';
+import StoryCircles from './Stories';
+import CreatePostCard from './CreatePost'; 
+import PostCard from './ui/PostCard'; 
+import Sidebar from './Sidebar';
 import RightSidebar from './RightSidebar';
 
 export default function MainFeed() {
-    return (
-        <div className="max-w-8xl mx-auto ml-20  overflow-scroll">
-            {/* Conteneur Flex pour afficher ProfileInfo à gauche et les Stories à droite */}
-            <div className="flex gap-6 mt-20">
-                {/* Le profil sur la gauche */}
-                <div className="w-1/4 pl-8">
-                    <ProfileInfo /> <Sidebar/>
-                </div>
-                
+    // État pour stocker les posts
+    const [posts, setPosts] = useState([]);
 
-                {/* Les Stories et le formulaire de création de post à droite */}
-                <div className="flex-1 ">
-                    {/* Les Stories */}
+    // Fonction pour ajouter un nouveau post
+    const addPost = (newPost) => {
+        setPosts((prevPosts) => [newPost, ...prevPosts]);
+    };
+
+    return (
+        <div className="max-w-8xl mx-auto ml-20 overflow-scroll">
+            <div className="flex gap-6 mt-20">
+                <div className="w-1/4 pl-8">
+                    <ProfileInfo />
+                    <Sidebar />
+                </div>
+                <div className="flex-1">
                     <div className="mb-6">
                         <StoryCircles />
                     </div>
                     {/* Le formulaire de création de post */}
-                    <CreatePostCard /><Post/><Post/> 
-                    
-                    
+                    <CreatePostCard onAddPost={addPost} />
+                    {/* Afficher tous les posts */}
+                    {posts.map((post, index) => (
+                        <PostCard key={index} post={post} />
+                    ))}
                 </div>
-                <div className="w-1/4 ">
-                     <RightSidebar/>
+                <div className="w-1/4">
+                    <RightSidebar />
                 </div>
-                
-
             </div>
         </div>
     );

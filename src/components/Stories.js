@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Camera, Plus, X, Heart, Share2, MessageCircle, Send, Image, Film } from 'lucide-react';
+import { Camera, X, Heart, Share2, MessageCircle, Send, Image, Film } from 'lucide-react';
 
 const StoryCircle = ({ user, image, isUser, onAddStory, onViewStory }) => (
   <div className="flex-shrink-0 w-28 relative">

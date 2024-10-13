@@ -97,7 +97,7 @@ const AddStoryModal = ({ isOpen, onClose, onAddStory }) => {
               )}
             </div>
           )}
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+          <button type="submit" className="bg-[#CC8C87] text-white px-4 py-2 rounded">
             Publier
           </button>
         </form>
@@ -178,7 +178,7 @@ const StoryViewModal = ({ isOpen, onClose, story }) => {
               placeholder="Ajouter un commentaire..."
               className="flex-grow p-2 border border-gray-300 rounded-l"
             />
-            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-r">
+            <button type="submit" className="bg-[#CC8C87] text-white px-4 py-2 rounded-r">
               <Send size={20} />
             </button>
           </form>

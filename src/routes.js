@@ -17,11 +17,11 @@ const AppRoutes = () => {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
-        <Route path="/" element={<MainFeed />} />
-        <Route path="/loader" element={<PageLoader />} />
-        <Route path="/feed" element={<MainFeed />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/feed" element={<MainFeed />} />
+        <Route path="/loader" element={<PageLoader />} />
+        <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<ProfilePage />} />

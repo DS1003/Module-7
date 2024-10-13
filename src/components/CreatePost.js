@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { Edit3, Image, X } from 'lucide-react';
+import {fetchRequest} from '../api';
+import Swal from 'sweetalert2';
 
-export default function CreatePostCard() {
+export default function CreatePostCard({ onAddPost }) {
   const [postContent, setPostContent] = useState('');
   const [tags, setTags] = useState([]);
   const [currentTag, setCurrentTag] = useState('');
@@ -25,19 +27,66 @@ export default function CreatePostCard() {
     if (file && (file.type.startsWith('image/') || file.type.startsWith('video/'))) {
       setSelectedFile(file);
     } else {
-      alert('Please select an image or video file.');
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid file type',
+        text: 'Please select an image or video file.',
+      });
+
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Post Content:', postContent);
-    console.log('Tags:', tags);
-    console.log('Selected File:', selectedFile);
-    // Here you would typically send the post data to your backend
-    setPostContent('');
-    setTags([]);
-    setSelectedFile(null);
+    
+    // Créez l'objet post à ajouter
+    const newPost = {
+      content: postContent,
+      tags: tags,
+      file: selectedFile,
+    };
+
+    // Appelez votre fonction pour ajouter le post localement
+    onAddPost(newPost);
+
+    
+    const formData = new FormData();
+    formData.append('content', postContent);
+    formData.append('tags', JSON.stringify(tags)); // Pour envoyer les tags en tant que JSON
+    if (selectedFile) {
+      formData.append('content', selectedFile); // Ajoutez le fichier s'il existe
+    }
+
+    try {
+
+      const token = localStorage.getItem('token'); // Récupération du token
+      const response = await fetchRequest('POST', 'http://localhost:5000/api/v1/post/create', formData, token);
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const responseData = await response.json();
+      console.log('Post successfully created:', responseData);
+      
+      // Réinitialiser les champs
+      setPostContent('');
+      setTags([]);
+      setSelectedFile(null);
+      Swal.fire({
+        icon: 'success',
+        title: 'Post created!',
+        text: 'Your post has been successfully created.',
+      });
+    } catch (error) {
+      console.error('Error creating post:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message || 'An error occurred while creating the post.',
+      });
+    }
   };
 
   return (

@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { 
-  Home,
-  Search,
+  Layout,
+  Users,
   Bell,
-  MessageSquare,
-  Settings,
+  Mail,
+  User,
   LogOut,
   Menu,
   X,
   Grid,
-  PlusSquare,
+  PlusCircle,
+  Search,
   Briefcase,
   ChevronDown
 } from 'lucide-react';
@@ -85,10 +86,9 @@ const Navbar = () => {
 
           {/* Main Navigation */}
           <div className="flex items-center justify-center flex-1 space-x-2">
-            <NavItem to="/" icon={Home} />
-            <NavItem to="/network" icon={Briefcase} />
-            <NavItem to="/create" icon={PlusSquare} />
-            <NavItem to="/messages" icon={MessageSquare} notificationCount={3} />
+            <NavItem to="/" icon={Layout} />
+            <NavItem to="/network" icon={Users} />
+            <NavItem to="/messages" icon={Mail} notificationCount={3} />
             <NavItem to="/notifications" icon={Bell} notificationCount={5} />
           </div>
 
@@ -133,7 +133,7 @@ const Navbar = () => {
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
                       <div className="bg-[#EAB0B7] p-2 rounded-full mr-3">
-                        <Settings className="w-5 h-5 text-white" />
+                        <User className="w-5 h-5 text-white" />
                       </div>
                       <span>Paramètres et confidentialité</span>
                     </NavLink>
@@ -194,19 +194,19 @@ const Navbar = () => {
                 />
               </div>
               <NavLink to="/" className="flex items-center px-3 py-2 text-[#242424] hover:bg-[#FDF1F2] rounded-md">
-                <Home className="w-5 h-5 mr-3" />
+                <Layout className="w-5 h-5 mr-3" />
                 Accueil
               </NavLink>
               <NavLink to="/network" className="flex items-center px-3 py-2 text-[#242424] hover:bg-[#FDF1F2] rounded-md">
-                <Briefcase className="w-5 h-5 mr-3" />
+                <Users className="w-5 h-5 mr-3" />
                 Mon réseau
               </NavLink>
               <NavLink to="/create" className="flex items-center px-3 py-2 text-[#242424] hover:bg-[#FDF1F2] rounded-md">
-                <PlusSquare className="w-5 h-5 mr-3" />
+                <PlusCircle className="w-5 h-5 mr-3" />
                 Créer
               </NavLink>
               <NavLink to="/messages" className="flex items-center px-3 py-2 text-[#242424] hover:bg-[#FDF1F2] rounded-md">
-                <MessageSquare className="w-5 h-5 mr-3" />
+                <Mail className="w-5 h-5 mr-3" />
                 Messages
               </NavLink>
               <NavLink to="/notifications" className="flex items-center px-3 py-2 text-[#242424] hover:bg-[#FDF1F2] rounded-md">
@@ -221,7 +221,7 @@ const Navbar = () => {
                     className="flex items-center px-3 py-2 text-[#242424] hover:bg-[#FDF1F2] rounded-md"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <Settings className="w-5 h-5 mr-3" />
+                    <User className="w-5 h-5 mr-3" />
                     Paramètres
                   </NavLink>
                   <button

@@ -38,7 +38,7 @@ export default function MainFeed() {
   };
 
     return (
-        <div className="overflow-scroll relative ">
+        <div className="overflow-scroll ml-[10%] relative ">
             {/* Conteneur Flex pour afficher ProfileInfo à gauche et les Stories à droite */}
             <div className="flex gap-6 mt-20">
                 {/* Le profil sur la gauche */}

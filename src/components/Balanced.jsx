@@ -18,13 +18,14 @@ const Balanced = ({ balance, lastPurchaseDate, purchaseHistory, onRefresh, onPur
   };
 
   return (
-    <div className="bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg p-6 text-white shadow-lg w-80 mb-4">
+    <div className=" overflow-hidden bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg p-6 text-white shadow-lg mb-4 w-full">
       <div className="flex justify-between items-center mb-6">
         <div>
           <h2 className="text-4xl font-bold">{balance}</h2>
           <p className="text-sm opacity-80">JETONS</p>
         </div>
-        <Gift size={36} className="text-pink-200" />
+        <img className='w-[100px] ' src="https://res.cloudinary.com/dgro5x4h8/image/upload/v1728787069/argent_53876-25502-removebg-preview_gfplhe.png" alt="" />
+        {/* <Gift size={36} className="text-pink-200" /> */}
       </div>
       <div className="flex justify-between items-center mb-6">
         <p className="text-sm">Dernier achat : {formatDate(lastPurchaseDate)}</p>

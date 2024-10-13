@@ -37,7 +37,7 @@ const PageLoader = () => {
                     ></div>
                 ))}
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-4xl font-bold text-[#4A4A4A]">{`${progress}%`}</span>
+                    <span className="text-4xl font-bold text-[#CC8C87]">{`${progress}%`}</span>
                 </div>
             </div>
             <div className="mt-8 space-y-2 text-center">

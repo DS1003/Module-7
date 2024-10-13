@@ -15,7 +15,7 @@ const Dashboard = lazy(() => import('./components/Dashboard'));
 const AppRoutes = () => {
   
   return (
-    <Suspense fallback={<div className='spinner'>Loading...</div>}>
+    <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path="/" element={<MainFeed />} />
         <Route path="/loader" element={<PageLoader />} />

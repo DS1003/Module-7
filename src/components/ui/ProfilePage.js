@@ -1,11 +1,14 @@
 import React from 'react';
+import { useState } from 'react';
 import ProfileHeader from './ProfileHeader';
 import UserInfo from './UserInfo';
 import UserPosts from './UserPosts';
 import InstagramStyleFavorites from './InstagramStyleFavorites';
 import UserMeasurements from './UserMeasurements';
+import UpdateRoleUser from './UpdateRoleUser';
 
 const ProfilePage = () => {
+  const [userRole, setUserRole] = useState('');  // État pour stocker le rôle de l'utilisateur
   const user = {
     name: 'Jane Doe',
     tagline: 'Photographer | Traveler | Coffee Lover',
@@ -15,6 +18,9 @@ const ProfilePage = () => {
     work: 'Freelance Photographer',
     education: 'Bachelor of Fine Arts, NYU',
     relationshipStatus: 'Single',
+  };
+  const handleRoleUpdate = (newRole) => {
+    setUserRole(newRole);
   };
 
   const posts = [
@@ -69,6 +75,7 @@ const ProfilePage = () => {
           <div className="md:col-span-1">
             <UserInfo user={user} />
             <UserMeasurements measurements={measurements} />
+            <UpdateRoleUser onRoleUpdate={handleRoleUpdate} />
             <InstagramStyleFavorites posts={posts} />
 
           </div>

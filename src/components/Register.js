@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { User, Mail, Lock, Phone, MapPin, Bell, Camera } from 'lucide-react';
+import { User, Mail, Lock, Phone, MapPin, Camera } from 'lucide-react';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -37,23 +37,8 @@ const Register = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#EAB0B7] to-[#CC8C87]">
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-[#242424]">Threadline</h1>
-          <input type="text" placeholder="Rechercher..." className="bg-gray-100 text-[#242424] px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-[#EAB0B7]" />
-          <div className="flex space-x-4">
-            <Link to="/" className="text-[#242424] hover:text-[#CC8C87]"><User size={24} /></Link>
-            <Link to="/messages" className="text-[#242424] hover:text-[#CC8C87]"><Mail size={24} /></Link>
-            <Link to="/notifications" className="text-[#242424] hover:text-[#CC8C87]"><Bell size={24} /></Link>
-          </div>
-          <button className="bg-[#CC8C87] hover:bg-[#EAB0B7] text-white px-4 py-2 rounded-full transition duration-300">
-            Connexion
-          </button>
-        </div>
-      </header>
-      
-      <main className="flex-grow container mx-auto my-8 px-4">
-        <div className="bg-white p-8 rounded-lg shadow-xl max-w-4xl mx-auto">
+      <main className="flex-grow flex justify-center items-center">
+        <div className="bg-white p-8 rounded-lg shadow-xl w-1/2  mx-auto">
           <h2 className="text-3xl font-bold text-center mb-6 text-[#242424]">
             Rejoignez l'aventure Threadline !
           </h2>

@@ -7,6 +7,7 @@ import Sidebar from './Sidebar';
 import RightSidebar from './RightSidebar';
 import MessageButton from './MessageButton';
 import Balanced from './Balanced';
+import Navbar from './Navbar';
 
 export default function MainFeed() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -40,6 +41,7 @@ export default function MainFeed() {
     return (
         <div className="max-w-8xl mx-auto ml-20 overflow-scroll relative">
             {/* Conteneur Flex pour afficher ProfileInfo à gauche et les Stories à droite */}
+            <Navbar />
             <div className="flex gap-6 mt-20">
                 {/* Le profil sur la gauche */}
                 <div className="w-1/4 pl-8">

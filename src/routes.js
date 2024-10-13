@@ -9,7 +9,7 @@ import PageLoader from './components/PageLoader';
 
 
 
-// Lazy load the Dashboard component
+// Lazy load the Dashboard component en ajoutant le page loader lors du chargement 
 const Dashboard = lazy(() => import('./components/Dashboard'));
 
 const AppRoutes = () => {

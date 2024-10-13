@@ -1,47 +1,53 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Chrome, Github, Facebook, Mail, Lock } from 'lucide-react';
+import { Scissors, Mail, Lock, Facebook, Instagram } from 'lucide-react';
 
 const Login = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#CC8C87] to-[#EAB0B7]">
-      <header className="bg-gray-800 text-white p-4">
-        <div className="container mx-auto">
-          <h1 className="text-2xl font-bold">Threadline</h1>
+    <div className="flex min-h-screen bg-gradient-to-br from-[#FFF5F5] to-[#FFF0F0]">
+      <div className="w-full max-w-4xl m-auto flex shadow-2xl rounded-xl overflow-hidden">
+        {/* Left side - decorative */}
+        <div className="hidden lg:flex lg:w-1/2 bg-[#CC8C87] p-12 flex-col justify-between items-center">
+          <div className="w-full text-white">
+            <h1 className="text-4xl font-bold mb-6">Threadline</h1>
+            <p className="text-xl">Le réseau social des créateurs de mode</p>
+          </div>
+          <div className="w-full flex justify-center">
+            <Scissors className="text-white" size={120} />
+          </div>
+          <p className="text-white text-sm">Tissez votre réseau, créez votre style</p>
         </div>
-      </header>
-      
-      <main className="flex-grow flex justify-center items-center p-4">
-        <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md transform transition-all duration-300 ease-in-out hover:scale-105">
-          <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Bienvenue sur Threadline</h2>
-          <h3 className="text-xl font-semibold mb-4 text-center text-gray-700">Se connecter</h3>
+        
+        {/* Right side - login form */}
+        <div className="w-full lg:w-1/2 bg-white p-12 flex flex-col justify-center">
+          <h2 className="text-3xl font-bold mb-6 text-center text-[#CC8C87]">Bienvenue sur Threadline</h2>
           <form className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Adresse Email</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#CC8C87]" size={18} />
                 <input 
                   type="email" 
-                  placeholder="Entrez votre email" 
-                  className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300 ease-in-out" 
+                  placeholder="votre@email.com" 
+                  className="pl-10 w-full px-4 py-2 border border-[#EAB0B7] rounded-md focus:ring-[#CC8C87] focus:border-[#CC8C87] transition-all duration-300 ease-in-out" 
                 />
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Mot de Passe</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#CC8C87]" size={18} />
                 <input 
                   type="password" 
-                  placeholder="Entrez votre mot de passe" 
-                  className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300 ease-in-out" 
+                  placeholder="••••••••" 
+                  className="pl-10 w-full px-4 py-2 border border-[#EAB0B7] rounded-md focus:ring-[#CC8C87] focus:border-[#CC8C87] transition-all duration-300 ease-in-out" 
                 />
               </div>
-              <a href="#" className="text-sm text-indigo-600 hover:text-indigo-800 transition-colors duration-300 ease-in-out">Mot de passe oublié ?</a>
+              <a href="#" className="text-sm text-[#CC8C87] hover:text-[#EAB0B7] transition-colors duration-300 ease-in-out">Mot de passe oublié ?</a>
             </div>
             <button 
               type="submit" 
-              className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out"
+              className="w-full bg-[#CC8C87] text-white py-2 px-4 rounded-md hover:bg-[#EAB0B7] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CC8C87] transition-all duration-300 ease-in-out"
             >
               Se connecter
             </button>
@@ -49,24 +55,24 @@ const Login = () => {
           <div className="mt-8">
             <p className="text-center text-sm text-gray-600">ou continuer avec</p>
             <div className="mt-4 flex justify-center space-x-4">
-              {[Chrome, Github, Facebook].map((Icon, index) => (
+              {[Facebook, Instagram].map((Icon, index) => (
                 <button 
                   key={index}
-                  className="p-2 border border-gray-300 rounded-full hover:bg-gray-50 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="p-2 border border-[#EAB0B7] rounded-full hover:bg-[#FFF5F5] transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CC8C87]"
                 >
-                  <Icon size={24} className="text-gray-600" />
+                  <Icon size={24} className="text-[#CC8C87]" />
                 </button>
               ))}
             </div>
           </div>
           <p className="mt-8 text-center text-sm text-gray-600">
-            Vous n'avez pas de compte ? {' '}
-            <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-800 transition-colors duration-300 ease-in-out">
-              S'inscrire
+            Nouveau sur Threadline ? {' '}
+            <Link to="/register" className="font-medium text-[#CC8C87] hover:text-[#EAB0B7] transition-colors duration-300 ease-in-out">
+              Créer un compte
             </Link>
           </p>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

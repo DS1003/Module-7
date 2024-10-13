@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogCancel } from './ui/AlertDialog';
-import { Gift, ChevronRight, RefreshCw } from 'lucide-react';
+import { ChevronRight, RefreshCw } from 'lucide-react';
 
 const Balanced = ({ balance, lastPurchaseDate, purchaseHistory, onRefresh, onPurchase }) => {
   const [isOpen, setIsOpen] = useState(false);
